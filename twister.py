@@ -60,31 +60,35 @@ def main():
 	
 	startTime = time.time()
 	spinCount = 0
+	again = True
 
-	while userInput not in vaildQuit:
-		clear()
+	while again == True:
+		while userInput not in vaildQuit:
+			clear()
+			
+			current = genNew(mostRecent) #pass list to check against
+			mostRecent[current.rank] = current
+			
+			print('{}\n\nYou should have your...\n'.format(current.print))
+			for i in mostRecent: tmp = '{}\n{}'.format(tmp,i.print)
+			print(tmp.strip())
+			
+			tmp = ''
+			spinCount += 1
+			userInput = input('\nAgain? [enter=yes]\n')
 		
-		current = genNew(mostRecent) #pass list to check against
-		mostRecent[current.rank] = current
+		endTime = time.time()
 		
-		print('{}\n\nYou should have your...\n'.format(current.print))
-		for i in mostRecent: tmp = '{}\n{}'.format(tmp,i.print)
-		print(tmp.strip())
+		runTime = round((endTime-startTime),2)
+		units = 'seconds'
 		
-		tmp = ''
-		spinCount += 1
-		userInput = input('\nAgain? [enter=yes]\n')
-	
-	endTime = time.time()
-	
-	runTime = round((endTime-startTime),2)
-	units = 'seconds'
-	
-	if runTime > 60:
-		runTime = round((runTime/60),2)
-		units = 'minutes'
-	
-	print('\nYour game lasted {num} {units} and {s} spins!\n'.format(num=runTime,units=units,s=spinCount))
+		if runTime > 60:
+			runTime = round((runTime/60),2)
+			units = 'minutes'
+		
+		print('\nYour game lasted {num} {units} and {s} spins!\n'.format(num=runTime,units=units,s=spinCount))
+		userInput = input('\nPlay Again? [enter=yes]\n')
+		if userInput in vaildQuit: again = False 
 	
 if __name__ == '__main__':
 	main()
